@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -7,18 +8,37 @@ export default function SignUp() {
     password: "",
   });
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.id]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
+    try {
+      setLoading(true);
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      setLoading(false);
+      if (response.ok) {
+        toast.success("User created successfully");
+        formData.username = "";
+        formData.email = "";
+        formData.password = "";
+      }
+    } catch (error) {
+      toast.error("Error occurred while signing up");
+    }
   };
 
   return (
@@ -31,7 +51,9 @@ export default function SignUp() {
             backgroundImage: `url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d')`,
           }}
         >
-          <h2 className="text-4xl font-bold mb-4 justify-center text-center">Create your Demo Account</h2>
+          <h2 className="text-4xl font-bold mb-4 justify-center text-center">
+            Create your Demo Account
+          </h2>
           <p className="text-lg"></p>
         </div>
 
@@ -45,17 +67,26 @@ export default function SignUp() {
             <input
               type="text"
               placeholder="Username"
+              id="username"
+              value={formData.username}
+              onChange={handleChange}
               className="w-full rounded border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-black"
             />
-            
+
             <input
               type="email"
               placeholder="Email address"
+              id="email"
+              onChange={handleChange}
+              value={formData.email}
               className="w-full rounded border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-black"
             />
             <input
               type="password"
               placeholder="Password"
+              id="password"
+              onChange={handleChange}
+              value={formData.password}
               className="w-full rounded border border-gray-300 px-4 py-2 outline-none focus:ring-2 focus:ring-black"
             />
 
@@ -68,9 +99,10 @@ export default function SignUp() {
 
             <button
               type="submit"
-              className="w-full rounded bg-black px-4 cursor-pointer py-2 text-white transition hover:bg-gray-800"
+              disabled={loading}
+              className="w-full rounded bg-black px-4 cursor-pointer py-2 disabled:opacity-50 text-white transition hover:bg-gray-800"
             >
-              Sign Up →
+              {loading ? "Signing Up..." : "Sign Up"}
             </button>
 
             <div className="my-4 text-center text-sm text-gray-500">or</div>
