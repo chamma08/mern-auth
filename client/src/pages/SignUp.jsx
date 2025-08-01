@@ -46,15 +46,23 @@ export default function SignUp() {
       <div className="flex w-full max-w-5xl overflow-hidden rounded-3xl shadow-lg">
         {/* Left Side - Image/Message */}
         <div
-          className="hidden w-1/2 bg-cover bg-center p-10 text-black md:block"
+          className="hidden w-1/2 bg-cover bg-center p-10 text-black md:block relative"
           style={{
             backgroundImage: `url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d')`,
           }}
         >
-          <h2 className="text-4xl font-bold mb-4 justify-center text-center">
-            Create your Demo Account
-          </h2>
-          <p className="text-lg"></p>
+          <div 
+            className="absolute inset-0" 
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+          ></div>
+          <div className="flex h-full flex-col justify-center relative z-10">
+            <h2 className="text-4xl font-bold mb-4 text-center text-white drop-shadow-lg">
+              Welcome Back
+            </h2>
+            <p className="text-lg text-center text-white drop-shadow-md">
+              Sign in to continue your journey
+            </p>
+          </div>
         </div>
 
         {/* Right Side - Form */}
