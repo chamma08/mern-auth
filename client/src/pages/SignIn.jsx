@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { signInStart,signInSuccess,signInFailure } from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
+  const { loading } = useSelector((state) => state.user);
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -21,7 +24,7 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const response = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -30,15 +33,16 @@ export default function SignIn() {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      setLoading(false);
       if (response.ok) {
+        dispatch(signInSuccess(data));
         toast.success("Signed in successfully");
         navigate("/");
       } else {
+        dispatch(signInFailure(data.message));
         toast.error(data.message || "Error occurred while signing in");
       }
     } catch (error) {
-      setLoading(false);
+      dispatch(signInFailure(error));
       toast.error("Error occurred while signing in");
     }
   };
