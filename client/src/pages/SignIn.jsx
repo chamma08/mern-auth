@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ export default function SignIn() {
   });
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -31,7 +33,7 @@ export default function SignIn() {
       setLoading(false);
       if (response.ok) {
         toast.success("Signed in successfully");
-        window.location.href = "/";
+        navigate("/");
       } else {
         toast.error(data.message || "Error occurred while signing in");
       }
