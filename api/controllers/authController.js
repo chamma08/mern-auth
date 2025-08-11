@@ -85,16 +85,19 @@ export const googleSignIn = async (req, res, next) => {
       });
       const { password: hashedPassword, ...userData } = user._doc;
       const expireryDate = new Date(Date.now() + 3600000);
-      res.cookie("access_token", token, {
-        httpOnly: true,
-        expires: expireryDate,
-      }).status(200).json({
-        message: "Login successful",
-        user: {
-          ...userData,
-          token,
-        },
-      });
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          expires: expireryDate,
+        })
+        .status(200)
+        .json({
+          message: "Login successful",
+          user: {
+            ...userData,
+            token,
+          },
+        });
     } else {
       const generatedPass = Math.random().toString(36).slice(-8);
       const hashedPassword = await bcryptjs.hash(generatedPass, 10);
@@ -110,16 +113,19 @@ export const googleSignIn = async (req, res, next) => {
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
-      res.cookie("access_token", token, {
-        httpOnly: true,
-        expires: expireryDate,
-      }).status(201).json({
-        message: "User created successfully",
-        user: {
-          ...newUser._doc,
-          password: undefined,
-        },
-      });
+      res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          expires: expireryDate,
+        })
+        .status(201)
+        .json({
+          message: "User created successfully",
+          user: {
+            ...newUser._doc,
+            password: undefined,
+          },
+        });
     }
   } catch (error) {
     next(error);
