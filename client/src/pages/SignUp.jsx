@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import OAuth from "../components/OAuth";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -35,6 +36,9 @@ export default function SignUp() {
         formData.username = "";
         formData.email = "";
         formData.password = "";
+      }
+      else {
+        toast.error("Error occurred while signing up");
       }
     } catch (error) {
       toast.error("Error occurred while signing up");
@@ -115,14 +119,7 @@ export default function SignUp() {
 
             <div className="my-4 text-center text-sm text-gray-500">or</div>
 
-            <button className="flex w-full items-center cursor-pointer justify-center gap-2 rounded border border-gray-300 px-4 py-2 text-gray-600 hover:bg-gray-100">
-              <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                alt="Google"
-                className="h-5 w-5"
-              />
-              Sign up with Google
-            </button>
+            <OAuth/>
           </form>
           <div className="mt-4 text-center text-sm text-gray-500">
             Already have an account?{" "}

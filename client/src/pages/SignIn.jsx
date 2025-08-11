@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { signInStart,signInSuccess,signInFailure } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -130,17 +131,7 @@ export default function SignIn() {
 
             <div className="my-4 text-center text-sm text-gray-500">or</div>
 
-            <button
-              type="button"
-              className="flex w-full items-center cursor-pointer justify-center gap-2 rounded border border-gray-300 px-4 py-2 text-gray-600 hover:bg-gray-100"
-            >
-              <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                alt="Google"
-                className="h-5 w-5"
-              />
-              Sign in with Google
-            </button>
+            <OAuth />
           </form>
 
           <div className="mt-4 text-center text-sm text-gray-500">
