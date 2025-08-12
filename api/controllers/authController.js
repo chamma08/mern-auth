@@ -40,12 +40,14 @@ export const signup = async (req, res, next) => {
 };
 
 export const signin = async (req, res, next) => {
+  const { email, password } = req.body;
+  
   try {
-    if (!username || !password) {
+    if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -107,7 +109,7 @@ export const googleSignIn = async (req, res, next) => {
           Math.floor(Math.random() * 10000).toString(),
         email: req.body.email,
         password: hashedPassword,
-        profilePicture: req.body.image,
+        profileImage: req.body.photo,
       });
       await newUser.save();
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
