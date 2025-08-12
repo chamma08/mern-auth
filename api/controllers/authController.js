@@ -113,10 +113,11 @@ export const googleSignIn = async (req, res, next) => {
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
+      const expiryDate = new Date(Date.now() + 3600000);
       res
         .cookie("access_token", token, {
           httpOnly: true,
-          expires: expireryDate,
+          expires: expiryDate,
         })
         .status(201)
         .json({
