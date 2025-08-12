@@ -1,32 +1,53 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Header() {
+  const { currentUser } = useSelector((state) => state.user);
   return (
-    <div className="bg-black text-white p-4">
+    <div className="bg-slate-900 text-white p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white hover:text-gray-300">
+        <Link
+          to="/"
+          className="text-white hover:text-blue-300 transition-colors duration-300"
+        >
           <h1 className="text-xl font-medium">
-            <span className="text-gray-300 font-bold">MERN</span> Auth
+            <span className="text-blue-400 font-bold">MERN</span> Auth
           </h1>
         </Link>
-        <ul>
-            <li className="inline-block mr-4">
-                <Link to="/sign-in" className="text-white hover:text-gray-300">
-                Sign In
-                </Link>
-            </li>
-            <li className="inline-block mr-4">
-                <Link to="/sign-up" className="text-white hover:text-gray-300">
-                Sign Up
-                </Link>
-            </li>
-            <li className="inline-block">
-                <Link to="/profile" className="text-white hover:text-gray-300">
-                Profile
-                </Link>
-            </li>
-        </ul>
+        <div className="flex items-center">
+          <li className="inline-block mr-4">
+            <Link
+              to="/profile"
+              className="text-white hover:text-blue-300 transition-colors duration-300"
+            >
+              {currentUser ? (
+                <img
+                  src={currentUser.profileImage}
+                  alt={currentUser.username}
+                  className="w-8 h-8 rounded-full object-cover border-2 border-blue-400 hover:border-blue-300 transition-colors duration-300"
+                />
+              ) : (
+                <span>Sign In</span>
+              )}
+            </Link>
+          </li>
+          <li className="inline-block mr-4">
+            <Link
+              to="/sign-up"
+              className="text-white hover:text-blue-300 transition-colors duration-300"
+            >
+              Sign Up
+            </Link>
+          </li>
+          <li className="inline-block">
+            <Link
+              to="/profile"
+              className="text-white hover:text-blue-300 transition-colors duration-300"
+            >
+              Profile
+            </Link>
+          </li>
+        </div>
       </div>
     </div>
   );
