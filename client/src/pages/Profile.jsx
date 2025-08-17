@@ -20,7 +20,7 @@ export default function Profile() {
                 />
                 <button
                   type="button"
-                  className="absolute bottom-0 right-0 bg-indigo-600 text-white rounded-full p-2 shadow-lg hover:bg-indigo-700 transition-colors"
+                  className="absolute bottom-0 right-0 cursor-pointer bg-indigo-600 text-white rounded-full p-2 shadow-lg hover:bg-indigo-700 transition-colors"
                 >
                   <svg
                     className="w-4 h-4"
