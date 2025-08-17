@@ -24,7 +24,7 @@ export default function Header() {
                 <img
                   src={currentUser.profileImage}
                   alt={currentUser.username}
-                  className="w-8 h-8 rounded-full object-cover border-2 border-blue-400 hover:border-blue-300 transition-colors duration-300"
+                  className="h-8 w-8 rounded-full object-cover"
                 />
               ) : (
                 <span>Sign In</span>
